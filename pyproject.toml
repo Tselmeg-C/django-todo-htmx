@@ -1,0 +1,12 @@
+[project]
+name = "django-todo-htmx"
+version = "0.1.0"
+description = "A server-rendered TODO application built with Django and HTMX"
+requires-python = ">=3.12"
+dependencies = [
+    "Django>=5.2,<5.3",
+    "psycopg[binary]>=3,<4",
+]
+
+[tool.uv]
+package = false
