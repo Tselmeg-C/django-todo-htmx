@@ -1,0 +1,20 @@
+<article class="todo-card{% if todo.is_overdue %} todo-card--overdue{% endif %}{% if todo.is_resolved %} todo-card--resolved{% endif %}" data-todo-id="{{ todo.pk }}">
+  <div class="todo-card__heading">
+    <h3>{{ todo.title }}</h3>
+    {% if todo.is_resolved %}
+      <span class="status-badge status-badge--resolved">Resolved</span>
+    {% elif todo.is_overdue %}
+      <span class="status-badge status-badge--overdue">Overdue</span>
+    {% endif %}
+  </div>
+
+  {% if todo.description %}
+    <p class="todo-card__description">{{ todo.description|linebreaksbr }}</p>
+  {% endif %}
+
+  {% if todo.due_date %}
+    <p class="todo-card__due-date">
+      Due <time datetime="{{ todo.due_date|date:'Y-m-d' }}">{{ todo.due_date|date:"M j, Y" }}</time>
+    </p>
+  {% endif %}
+</article>

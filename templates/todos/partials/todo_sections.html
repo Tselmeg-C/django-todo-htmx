@@ -1,0 +1,17 @@
+<div id="todo-sections" class="todo-sections">
+  <section class="todo-section" aria-labelledby="active-heading">
+    <header class="todo-section__header">
+      <h2 id="active-heading">Active TODOs</h2>
+      <span class="todo-count" aria-label="Active TODO count">{{ active_todos|length }}</span>
+    </header>
+    {% include "todos/partials/todo_list.html" with todos=active_todos empty_message="No active TODOs yet." only %}
+  </section>
+
+  <section class="todo-section todo-section--resolved" aria-labelledby="resolved-heading">
+    <header class="todo-section__header">
+      <h2 id="resolved-heading">Resolved TODOs</h2>
+      <span class="todo-count" aria-label="Resolved TODO count">{{ resolved_todos|length }}</span>
+    </header>
+    {% include "todos/partials/todo_list.html" with todos=resolved_todos empty_message="No resolved TODOs yet." only %}
+  </section>
+</div>

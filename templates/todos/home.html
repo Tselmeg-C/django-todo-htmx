@@ -3,9 +3,11 @@
 {% block title %}TODO application{% endblock %}
 
 {% block content %}
-  <section class="placeholder" aria-labelledby="page-title">
-    <p class="eyebrow">Django + HTMX</p>
+  <header class="page-header">
+    <p class="eyebrow">Stay focused</p>
     <h1 id="page-title">TODO application</h1>
-    <p>The application foundation is ready. TODOs arrive in the next task.</p>
-  </section>
+    <p class="page-intro">Keep upcoming work visible and completed work close at hand.</p>
+  </header>
+
+  {% include "todos/partials/todo_sections.html" %}
 {% endblock %}

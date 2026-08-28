@@ -1,13 +1,13 @@
 from pathlib import Path
 
 from django.core.exceptions import ImproperlyConfigured
-from django.test import SimpleTestCase
+from django.test import SimpleTestCase, TestCase
 from django.urls import reverse
 
 from config.database import database_config
 
 
-class HomePageTests(SimpleTestCase):
+class HomePageTests(TestCase):
     def test_home_page_uses_shared_application_shell(self):
         response = self.client.get(reverse("home"))
 

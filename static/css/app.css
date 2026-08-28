@@ -20,12 +20,8 @@ body {
   padding-block: 4rem;
 }
 
-.placeholder {
-  padding: clamp(1.5rem, 5vw, 3rem);
-  border: 1px solid #d7deeb;
-  border-radius: 1rem;
-  background: #fff;
-  box-shadow: 0 1rem 3rem rgb(32 52 89 / 8%);
+.page-header {
+  margin-block-end: 2rem;
 }
 
 .eyebrow {
@@ -40,4 +36,122 @@ body {
 h1 {
   margin-block: 0.5rem;
   line-height: 1.15;
+}
+
+.page-intro {
+  max-width: 40rem;
+  margin: 0;
+  color: #596780;
+}
+
+.todo-sections {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.todo-section {
+  min-width: 0;
+  padding: clamp(1rem, 3vw, 1.5rem);
+  border: 1px solid #d7deeb;
+  border-radius: 1rem;
+  background: #fff;
+  box-shadow: 0 1rem 3rem rgb(32 52 89 / 8%);
+}
+
+.todo-section--resolved {
+  background: #f9fafc;
+}
+
+.todo-section__header,
+.todo-card__heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.todo-section__header {
+  margin-block-end: 1rem;
+}
+
+.todo-section__header h2,
+.todo-card h3 {
+  margin: 0;
+}
+
+.todo-count {
+  display: inline-grid;
+  min-width: 2rem;
+  min-height: 2rem;
+  place-items: center;
+  border-radius: 999px;
+  color: #435b8b;
+  background: #e8edf7;
+  font-weight: 700;
+}
+
+.todo-list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.todo-card {
+  padding: 1rem;
+  border: 1px solid #dce2ec;
+  border-inline-start: 0.3rem solid #7690bf;
+  border-radius: 0.65rem;
+  background: #fff;
+}
+
+.todo-card--overdue {
+  border-color: #b04a4a;
+  background: #fff8f7;
+}
+
+.todo-card--resolved {
+  border-inline-start-color: #4c8061;
+}
+
+.todo-card__description {
+  margin-block: 0.65rem 0;
+  color: #46546c;
+}
+
+.todo-card__due-date {
+  margin-block: 0.75rem 0;
+  color: #596780;
+  font-size: 0.9rem;
+}
+
+.status-badge {
+  flex: 0 0 auto;
+  padding: 0.2rem 0.55rem;
+  border: 1px solid currentcolor;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.status-badge--overdue {
+  color: #9b2f2f;
+}
+
+.status-badge--resolved {
+  color: #356c4b;
+}
+
+.empty-state {
+  margin: 0;
+  padding: 1.25rem;
+  border: 1px dashed #bec8d8;
+  border-radius: 0.65rem;
+  color: #647189;
+  text-align: center;
+}
+
+@media (min-width: 48rem) {
+  .todo-sections {
+    grid-template-columns: minmax(0, 3fr) minmax(16rem, 2fr);
+    align-items: start;
+  }
 }
