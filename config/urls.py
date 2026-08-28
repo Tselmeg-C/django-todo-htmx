@@ -1,11 +1,9 @@
 """Root URL configuration for the TODO project."""
 
 from django.contrib import admin
-from django.urls import path
-
-from todos.views import home
+from django.urls import include, path
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", home, name="home"),
+    path("", include("todos.urls")),
 ]

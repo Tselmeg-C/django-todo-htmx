@@ -1,0 +1,47 @@
+{% if todo %}<article class="todo-card todo-card--editing" data-todo-id="{{ todo.pk }}">{% endif %}
+<form
+  {% if todo %}id="todo-edit-form-{{ todo.pk }}"{% else %}id="todo-create-form"{% endif %}
+  class="todo-form"
+  method="post"
+  action="{% if todo %}{% url 'todo-edit' todo.pk %}{% else %}{% url 'todo-create' %}{% endif %}"
+  hx-post="{% if todo %}{% url 'todo-edit' todo.pk %}{% else %}{% url 'todo-create' %}{% endif %}"
+  hx-target="{% if todo %}#todo-sections{% else %}#todo-app{% endif %}"
+  hx-swap="outerHTML"
+  hx-disabled-elt="find button[type='submit']"
+>
+  {% csrf_token %}
+
+  {% if form.non_field_errors %}
+    <div class="form-errors" role="alert">
+      {% for error in form.non_field_errors %}<p>{{ error }}</p>{% endfor %}
+    </div>
+  {% endif %}
+
+  <div class="form-grid">
+    {% for field in form %}
+      <div class="form-field form-field--{{ field.name }}{% if field.errors %} form-field--error{% endif %}">
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field }}
+        {% for error in field.errors %}
+          <p class="form-error" id="{{ field.auto_id }}-error" role="alert">{{ error }}</p>
+        {% endfor %}
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="form-actions">
+    <button class="button button--primary" type="submit">
+      {% if todo %}Save changes{% else %}Add TODO{% endif %}
+    </button>
+    {% if todo %}
+      <a
+        class="button button--secondary"
+        href="{% url 'home' %}"
+        hx-get="{% url 'todo-edit-cancel' todo.pk %}"
+        hx-target="#todo-sections"
+        hx-swap="outerHTML"
+      >Cancel</a>
+    {% endif %}
+  </div>
+</form>
+{% if todo %}</article>{% endif %}

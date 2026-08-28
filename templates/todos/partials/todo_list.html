@@ -1,6 +1,10 @@
 <div class="todo-list">
   {% for todo in todos %}
-    {% include "todos/partials/todo_item.html" with todo=todo only %}
+    {% if editing_todo and editing_todo.pk == todo.pk %}
+      {% include "todos/partials/todo_form.html" with form=edit_form todo=todo %}
+    {% else %}
+      {% include "todos/partials/todo_item.html" with todo=todo only %}
+    {% endif %}
   {% empty %}
     <p class="empty-state">{{ empty_message }}</p>
   {% endfor %}

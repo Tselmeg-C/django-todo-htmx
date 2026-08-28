@@ -17,4 +17,14 @@
       Due <time datetime="{{ todo.due_date|date:'Y-m-d' }}">{{ todo.due_date|date:"M j, Y" }}</time>
     </p>
   {% endif %}
+
+  <div class="todo-card__actions">
+    <a
+      class="button button--secondary"
+      href="{% url 'home' %}?edit={{ todo.pk }}"
+      hx-get="{% url 'todo-edit' todo.pk %}"
+      hx-target="#todo-sections"
+      hx-swap="outerHTML"
+    >Edit</a>
+  </div>
 </article>

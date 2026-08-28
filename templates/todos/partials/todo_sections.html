@@ -4,7 +4,7 @@
       <h2 id="active-heading">Active TODOs</h2>
       <span class="todo-count" aria-label="Active TODO count">{{ active_todos|length }}</span>
     </header>
-    {% include "todos/partials/todo_list.html" with todos=active_todos empty_message="No active TODOs yet." only %}
+    {% include "todos/partials/todo_list.html" with todos=active_todos empty_message="No active TODOs yet." editing_todo=editing_todo edit_form=edit_form %}
   </section>
 
   <section class="todo-section todo-section--resolved" aria-labelledby="resolved-heading">
@@ -12,6 +12,6 @@
       <h2 id="resolved-heading">Resolved TODOs</h2>
       <span class="todo-count" aria-label="Resolved TODO count">{{ resolved_todos|length }}</span>
     </header>
-    {% include "todos/partials/todo_list.html" with todos=resolved_todos empty_message="No resolved TODOs yet." only %}
+    {% include "todos/partials/todo_list.html" with todos=resolved_todos empty_message="No resolved TODOs yet." editing_todo=editing_todo edit_form=edit_form %}
   </section>
 </div>

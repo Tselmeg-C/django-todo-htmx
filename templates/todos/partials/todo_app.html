@@ -1,0 +1,11 @@
+<div id="todo-app">
+  <section class="create-panel" aria-labelledby="create-heading">
+    <div class="create-panel__heading">
+      <p class="eyebrow">New task</p>
+      <h2 id="create-heading">Add a TODO</h2>
+    </div>
+    {% include "todos/partials/todo_form.html" with form=create_form %}
+  </section>
+
+  {% include "todos/partials/todo_sections.html" %}
+</div>
