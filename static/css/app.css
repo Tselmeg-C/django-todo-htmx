@@ -121,6 +121,10 @@ h1 {
   margin-block-start: 0.9rem;
 }
 
+.todo-card__actions form {
+  margin: 0;
+}
+
 .button {
   display: inline-flex;
   align-items: center;
@@ -145,6 +149,11 @@ h1 {
   border-color: #9dabc0;
   color: #293b5c;
   background: #fff;
+}
+
+.button--danger {
+  color: #fff;
+  background: #9b2f2f;
 }
 
 .button:hover {
@@ -227,6 +236,16 @@ h1 {
 .todo-card--editing {
   border-color: #5f7fb5;
   background: #f6f9ff;
+}
+
+.todo-card--confirmation {
+  border-color: #c68585;
+  background: #fff8f7;
+}
+
+.confirmation-copy {
+  margin-block: 0.75rem 0;
+  color: #6d3c3c;
 }
 
 .todo-card__description {

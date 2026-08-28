@@ -11,4 +11,17 @@ urlpatterns = [
         views.todo_edit_cancel,
         name="todo-edit-cancel",
     ),
+    path("todos/<int:pk>/resolve/", views.todo_resolve, name="todo-resolve"),
+    path("todos/<int:pk>/reopen/", views.todo_reopen, name="todo-reopen"),
+    path(
+        "todos/<int:pk>/delete/confirm/",
+        views.todo_delete_confirm,
+        name="todo-delete-confirm",
+    ),
+    path(
+        "todos/<int:pk>/delete/cancel/",
+        views.todo_delete_cancel,
+        name="todo-delete-cancel",
+    ),
+    path("todos/<int:pk>/delete/", views.todo_delete, name="todo-delete"),
 ]

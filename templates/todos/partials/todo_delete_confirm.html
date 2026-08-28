@@ -1,0 +1,19 @@
+<article class="todo-card todo-card--confirmation" data-todo-id="{{ todo.pk }}">
+  <div class="todo-card__heading">
+    <h3>Delete “{{ todo.title }}”?</h3>
+  </div>
+  <p class="confirmation-copy">This permanently deletes the TODO. This action cannot be undone.</p>
+  <div class="todo-card__actions">
+    <form method="post" action="{% url 'todo-delete' todo.pk %}" hx-post="{% url 'todo-delete' todo.pk %}" hx-target="#todo-sections" hx-swap="outerHTML">
+      {% csrf_token %}
+      <button class="button button--danger" type="submit">Delete permanently</button>
+    </form>
+    <a
+      class="button button--secondary"
+      href="{% url 'home' %}"
+      hx-get="{% url 'todo-delete-cancel' todo.pk %}"
+      hx-target="#todo-sections"
+      hx-swap="outerHTML"
+    >Cancel</a>
+  </div>
+</article>

@@ -13,7 +13,13 @@ def _is_htmx(request):
     return request.headers.get("HX-Request", "").lower() == "true"
 
 
-def _todo_context(*, create_form=None, editing_todo=None, edit_form=None):
+def _todo_context(
+    *,
+    create_form=None,
+    editing_todo=None,
+    edit_form=None,
+    deleting_todo=None,
+):
     if create_form is None:
         create_form = TodoForm()
 
@@ -23,6 +29,7 @@ def _todo_context(*, create_form=None, editing_todo=None, edit_form=None):
         "create_form": create_form,
         "editing_todo": editing_todo,
         "edit_form": edit_form,
+        "deleting_todo": deleting_todo,
     }
 
 
@@ -34,11 +41,21 @@ def _render_todo_app(request, **context_overrides):
     )
 
 
-def _render_todo_sections(request, *, editing_todo=None, edit_form=None):
+def _render_todo_sections(
+    request,
+    *,
+    editing_todo=None,
+    edit_form=None,
+    deleting_todo=None,
+):
     return render(
         request,
         "todos/partials/todo_sections.html",
-        _todo_context(editing_todo=editing_todo, edit_form=edit_form),
+        _todo_context(
+            editing_todo=editing_todo,
+            edit_form=edit_form,
+            deleting_todo=deleting_todo,
+        ),
     )
 
 
@@ -46,6 +63,7 @@ def home(request):
     """Render active and resolved TODOs on the application home page."""
     editing_todo = None
     edit_form = None
+    deleting_todo = None
     editing_id = request.GET.get("edit")
     if editing_id:
         try:
@@ -54,11 +72,22 @@ def home(request):
             raise Http404("TODO not found") from exc
         editing_todo = get_object_or_404(Todo, pk=editing_pk)
         edit_form = TodoForm(instance=editing_todo)
+    deleting_id = request.GET.get("delete")
+    if deleting_id and editing_todo is None:
+        try:
+            deleting_pk = int(deleting_id)
+        except ValueError as exc:
+            raise Http404("TODO not found") from exc
+        deleting_todo = get_object_or_404(Todo, pk=deleting_pk)
 
     return render(
         request,
         "todos/home.html",
-        _todo_context(editing_todo=editing_todo, edit_form=edit_form),
+        _todo_context(
+            editing_todo=editing_todo,
+            edit_form=edit_form,
+            deleting_todo=deleting_todo,
+        ),
     )
 
 
@@ -119,6 +148,54 @@ def todo_edit(request, pk):
 @require_GET
 def todo_edit_cancel(request, pk):
     get_object_or_404(Todo, pk=pk)
+    if _is_htmx(request):
+        return _render_todo_sections(request)
+    return redirect("home")
+
+
+@vary_on_headers("HX-Request")
+@require_POST
+def todo_resolve(request, pk):
+    todo = get_object_or_404(Todo, pk=pk)
+    todo.resolve()
+    if _is_htmx(request):
+        return _render_todo_sections(request)
+    return redirect("home")
+
+
+@vary_on_headers("HX-Request")
+@require_POST
+def todo_reopen(request, pk):
+    todo = get_object_or_404(Todo, pk=pk)
+    todo.reopen()
+    if _is_htmx(request):
+        return _render_todo_sections(request)
+    return redirect("home")
+
+
+@vary_on_headers("HX-Request")
+@require_GET
+def todo_delete_confirm(request, pk):
+    todo = get_object_or_404(Todo, pk=pk)
+    if _is_htmx(request):
+        return _render_todo_sections(request, deleting_todo=todo)
+    return redirect(f"{reverse('home')}?delete={todo.pk}")
+
+
+@vary_on_headers("HX-Request")
+@require_GET
+def todo_delete_cancel(request, pk):
+    get_object_or_404(Todo, pk=pk)
+    if _is_htmx(request):
+        return _render_todo_sections(request)
+    return redirect("home")
+
+
+@vary_on_headers("HX-Request")
+@require_POST
+def todo_delete(request, pk):
+    todo = get_object_or_404(Todo, pk=pk)
+    todo.delete()
     if _is_htmx(request):
         return _render_todo_sections(request)
     return redirect("home")

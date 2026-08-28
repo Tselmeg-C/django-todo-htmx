@@ -1,9 +1,11 @@
 <div class="todo-list">
   {% for todo in todos %}
-    {% if editing_todo and editing_todo.pk == todo.pk %}
+    {% if deleting_todo and deleting_todo.pk == todo.pk %}
+      {% include "todos/partials/todo_delete_confirm.html" with todo=todo %}
+    {% elif editing_todo and editing_todo.pk == todo.pk %}
       {% include "todos/partials/todo_form.html" with form=edit_form todo=todo %}
     {% else %}
-      {% include "todos/partials/todo_item.html" with todo=todo only %}
+      {% include "todos/partials/todo_item.html" with todo=todo %}
     {% endif %}
   {% empty %}
     <p class="empty-state">{{ empty_message }}</p>

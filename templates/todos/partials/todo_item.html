@@ -26,5 +26,23 @@
       hx-target="#todo-sections"
       hx-swap="outerHTML"
     >Edit</a>
+    {% if todo.is_resolved %}
+      <form method="post" action="{% url 'todo-reopen' todo.pk %}" hx-post="{% url 'todo-reopen' todo.pk %}" hx-target="#todo-sections" hx-swap="outerHTML">
+        {% csrf_token %}
+        <button class="button button--secondary" type="submit">Reopen</button>
+      </form>
+    {% else %}
+      <form method="post" action="{% url 'todo-resolve' todo.pk %}" hx-post="{% url 'todo-resolve' todo.pk %}" hx-target="#todo-sections" hx-swap="outerHTML">
+        {% csrf_token %}
+        <button class="button button--secondary" type="submit">Resolve</button>
+      </form>
+    {% endif %}
+    <a
+      class="button button--danger"
+      href="{% url 'home' %}?delete={{ todo.pk }}"
+      hx-get="{% url 'todo-delete-confirm' todo.pk %}"
+      hx-target="#todo-sections"
+      hx-swap="outerHTML"
+    >Delete</a>
   </div>
 </article>
