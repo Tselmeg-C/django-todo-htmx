@@ -36,6 +36,7 @@ body {
 h1 {
   margin-block: 0.5rem;
   line-height: 1.15;
+  overflow-wrap: anywhere;
 }
 
 .page-intro {
@@ -222,6 +223,7 @@ h1 {
   border-inline-start: 0.3rem solid #7690bf;
   border-radius: 0.65rem;
   background: #fff;
+  overflow-wrap: anywhere;
 }
 
 .todo-card--overdue {
@@ -302,5 +304,27 @@ h1 {
   .todo-sections {
     grid-template-columns: minmax(0, 3fr) minmax(16rem, 2fr);
     align-items: start;
+  }
+}
+
+@media (max-width: 30rem) {
+  .page-shell {
+    width: min(100% - 1rem, 64rem);
+    padding-block: 2rem;
+  }
+
+  .todo-card__heading,
+  .todo-section__header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .todo-card__actions .button,
+  .todo-card__actions form {
+    width: 100%;
+  }
+
+  .todo-card__actions form .button {
+    width: 100%;
   }
 }
